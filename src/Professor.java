@@ -25,6 +25,5 @@ public class Professor extends JFrame {
         img2.setBounds(200,420,300,300);
     }
     public static void main(String [] args){
-        new Professor();
-            }
+    }
 }

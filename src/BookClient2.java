@@ -84,12 +84,12 @@ public class BookClient2 {
                         if(arr[0].equals("1")) {
                             if (screen != null)
                                 screen.dispose();
-                            screen = new Screen(arr[1] + "(나)", arr[2] + "(상대)", 2, 15);
+                            screen = new Screen(arr[1] + "(나)", arr[2] + "(상대)", 2, 0);
                         }//내꺼가 있으면 종료
                         else{
                             if (screen != null)
                                 screen.dispose();
-                            screen = new Screen(arr[1] + "(상대)", arr[2] + "(나)", 2, 15);
+                            screen = new Screen(arr[1] + "(상대)", arr[2] + "(나)", 2, 0);
                         }
                         make = true;//만들어진 것을 확인
                         if(wait!=null)
