@@ -18,7 +18,7 @@ public class BookClient2 {
     boolean make = false;
     Wait wait;
     String input_name;//이름을 저장
-
+    Chat chat;
     public void runner(String s,String ip){
         try{
             String serverIp="172.17.223.61";
@@ -85,15 +85,21 @@ public class BookClient2 {
                             if (screen != null)
                                 screen.dispose();
                             screen = new Screen(arr[1] + "(나)", arr[2] + "(상대)", 2, 0);
+                            chat = new Chat(arr[1]);
                         }//내꺼가 있으면 종료
                         else{
                             if (screen != null)
                                 screen.dispose();
                             screen = new Screen(arr[1] + "(상대)", arr[2] + "(나)", 2, 0);
+                            chat = new Chat(arr[2]);
                         }
                         make = true;//만들어진 것을 확인
                         if(wait!=null)
                             wait.dispose();
+                    }
+                    else if (s.contains("$")){
+                        String str = s.substring(0,s.length()-1);
+                        chat.read(str);
                     }
                     else if(s.contains("*")){
                         new Victory(input_name);//승리창 띄우고, 대기

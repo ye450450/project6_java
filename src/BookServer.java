@@ -96,7 +96,10 @@ public class BookServer {
                     socket.close();
                     clients.remove(name);
                 }
-                sendToAll(s);
+                if(s.contains("$"))
+                    sendToAll("["+name+"]"+s);
+                else
+                    sendToAll(s);
                 if(s.contains("*")){
                     throw new IOException();
                 }
