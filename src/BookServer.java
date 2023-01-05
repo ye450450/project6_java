@@ -55,6 +55,7 @@ public class BookServer {
                 e.printStackTrace();
             }
         }
+
         class ServerReceiver extends Thread {
             Socket socket;
             DataInputStream in;
@@ -73,27 +74,36 @@ public class BookServer {
         String name ="";
         try {
             name = in.readUTF();//지금 써져있는 것은 받아서 name에 저장
-            sendToAll("#" + name + "님이 들어오셨습니다.");
-
+            //sendToAll("#" + name + "님이 들어오셨습니다.");
+            //sendToAll(name);//들어온 사람의 이름이 감
             clients.put(name, out);//hash에 넣어줌 (들어온 사람)
-//            if(clients.size()==2){
-//                Iterator it = clients.keySet().iterator();//key의 배열의 주소값을 저장
-//                while(it.hasNext()){
-//                    String next = (String) it.next();//이름을 가져옴
-//                    System.out.println("이름 : "+ next);
-//                    if(!next.equals(name))
-//                        sendToPerson(next,"2번");
-//                    else
-//                        sendToPerson(next,"1번");
-//                }
-//            }
+            if(clients.size()==2){
+                Iterator it = clients.keySet().iterator();//key의 배열의 주소값을 저장
+                while(it.hasNext()){
+                    String next = (String) it.next();//이름을 가져옴
+                    System.out.println("이름 : "+ next);
+                    if(!next.equals(name)) {//1번째로 들어온사람
+                        sendToPerson(next, "1#" + next + "#" + name);
+                        sendToPerson(name, "2#" + next + "#" + name);
+                    }
+                }
+            }
+            else sendToPerson(name,String.valueOf(clients.size()));//본인에게 번호를 줌
             System.out.println("현재 서버접속자 수는 " + clients.size() + "입니다.");
             while (in!=null){
-                sendToAll(in.readUTF());
+                String s = in.readUTF();
+                if(s.contains("*")){
+                    socket.close();
+                    clients.remove(name);
+                }
+                sendToAll(s);
+                if(s.contains("*")){
+                    throw new IOException();
+                }
             }
         }catch(IOException e){
             }finally{
-                sendToAll("#"+name+"님이 나가셨습니다.");
+                sendToAll(name+"님이 나가셨습니다.");
                 clients.remove(name);//나간 것을 암
                 System.out.println("["+socket.getInetAddress()+":"+socket.getPort()+"]"+"에서 접속을 종료하였습니다.");
                 System.out.println("현재 서버접속자 수는"+clients.size()+"입니다.");
