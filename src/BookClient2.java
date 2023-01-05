@@ -16,10 +16,10 @@ import java.util.Scanner;
 public class BookClient2 {
     Screen screen;
 
-    public void runner(String s){
+    public void runner(String s,String ip){
         try{
             String serverIp="172.17.223.61";
-            Socket socket = new Socket(serverIp,9999);//소켓을 만들어줌
+            Socket socket = new Socket(ip,9999);//소켓을 만들어줌
             System.out.println("서버에 연결되었습니다.");
             //GetUser getUser = new GetUser();
             Thread sender = new Thread(new ClientSender(socket,s));//내용을 보내는 함수선언
@@ -78,7 +78,6 @@ public class BookClient2 {
                 try{
                     String s = in.readUTF();
                     screen.board.recieve(s);
-                    System.out.println(s);
                     //상대방의 좌표값을 받는다.
                 }catch(IOException e){}
             }//계속 대기

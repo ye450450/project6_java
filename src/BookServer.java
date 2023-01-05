@@ -62,7 +62,6 @@ public class BookServer {
 
             ServerReceiver(Socket socket) {
                 this.socket = socket;
-
                 try {
                     in = new DataInputStream(socket.getInputStream());//클라이언트만다 inputstream만듬
                     out = new DataOutputStream(socket.getOutputStream());//클라이언트마다 outputstream만듬
